@@ -1,87 +1,71 @@
 import React, { useState } from 'react';
-import { Wallet, LogOut, Shield, Stars, ChevronRight } from 'lucide-react';
-import albedo from '@albedo-link/intent'; // <-- 1. Esta es tu "constante"
+import { Wallet, Shield, ChevronRight, AlertCircle, Sparkles } from 'lucide-react';
+import albedo from '@albedo-link/intent';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../assets/styles/login.css';
 
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const navigator = useNavigate();
-  
   const connectWallet = async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const res = await albedo.publicKey({ network: 'testnet' });
-      setIsAuthenticated(true);
-      localStorage.setItem('token', res.pubkey);
-        navigator('/dashboard');
-      
+      if (res && res.pubkey) {
+        localStorage.setItem('token', res.pubkey);
+        navigate('/dashboard');
+      } else {
+        setError('No se obtuvo la clave pública desde Albedo. Intenta nuevamente.');
+      }
     } catch (e) {
-      setError('Error al conectar con Albedo. Por favor, intenta de nuevo.');
-      console.error("Error al conectar con Albedo:", e);
+      setError('No se pudo conectar con Albedo. Verifica que la extensión esté instalada.');
+      console.error('Error al conectar con Albedo:', e);
     } finally {
       setIsLoading(false);
     }
   };
 
-
-  // Página de Login
   return (
     <div className="login-container">
-      {/* Efectos de fondo animados */}
       <div className="background-effects">
         <div className="bg-circle bg-circle-1"></div>
         <div className="bg-circle bg-circle-2"></div>
         <div className="bg-circle bg-circle-3"></div>
       </div>
 
-      {/* Card de Login */}
       <div className="login-card-wrapper">
         <div className="login-card">
-          {/* Icono principal */}
           <div className="login-icon-container">
             <div className="login-icon">
               <Shield className="icon" />
             </div>
           </div>
 
-          {/* Título */}
           <div className="login-header">
-            <h1 className="login-title">Bienvenido</h1>
-            <p className="login-subtitle">Autenticación segura con Albedo</p>
           </div>
 
-          {/* Información de seguridad */}
           <div className="security-info">
             <div className="security-content">
-              <Shield className="security-icon" />
-              <div className="security-text">
-                <h3 className="security-title">Verificación de Identidad</h3>
-                <p className="security-description">
-                  Utiliza tu wallet de Stellar para autenticarte de forma segura y descentralizada en la red Testnet.
-                </p>
+              <Sparkles className="security-icon" />
+              <div>
+                <h3 className="security-title">Autenticación Descentralizada</h3>
+                <p className="security-description">Conecta tu wallet de Stellar de forma segura. No almacenamos tus claves privadas.</p>
               </div>
             </div>
           </div>
 
-          {/* Mensaje de error */}
           {error && (
             <div className="error-message">
+              <AlertCircle size={16} />
               <p>{error}</p>
             </div>
           )}
 
-          {/* Botón de conexión */}
-          <button
-            onClick={connectWallet}
-            disabled={isLoading}
-            className={`connect-button ${isLoading ? 'loading' : ''}`}
-          >
+          <button onClick={connectWallet} disabled={isLoading} className={`connect-button ${isLoading ? 'loading' : ''}`}>
             {isLoading ? (
               <>
                 <div className="spinner"></div>
@@ -89,31 +73,21 @@ export default function App() {
               </>
             ) : (
               <>
-                <Wallet className="icon-small" />
+                <Wallet />
                 Conectar con Albedo
-                <ChevronRight className="icon-small chevron" />
               </>
             )}
           </button>
 
-          {/* Footer */}
           <div className="login-footer">
             <p className="footer-text">
               ¿No tienes Albedo?{' '}
-              <a 
-                href="https://albedo.link/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
+              <a href="https://albedo.link/" target="_blank" rel="noopener noreferrer" className="footer-link">
                 Obtenerlo aquí
               </a>
             </p>
           </div>
         </div>
-
-        {/* Decoración inferior */}
-        <div className="login-card-shadow"></div>
       </div>
     </div>
   );

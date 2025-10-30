@@ -1,57 +1,37 @@
-import {useState, useEffect} from 'react';
-import { Wallet, LogOut, Shield, Stars, ChevronRight } from 'lucide-react';
-// import albedo from '@albedo-link/intent';
+import React, { useState, useEffect } from 'react';
+import { Wallet, LogOut, Shield, BookOpen, User, Award, Sparkles, TrendingUp, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+import '../App.css';
+import '../assets/styles/dashboard.css';
 
 export default function Dashboard() {
-
   const navigate = useNavigate();
   const publicKey = localStorage.getItem('token');
 
-    const handleLogout = () => {
-      localStorage.removeItem('token');
-      navigate('/');
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
   };
 
   const [balances, setBalances] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // --- useEffect para buscar el balance ---
   useEffect(() => {
-    // No hacer nada si no hay clave pública
-    if (!publicKey) {
-      return;
-    }
+    if (!publicKey) return;
 
-    // Reiniciar estados
     setIsLoading(true);
     setBalances([]);
     setError(null);
 
     const fetchAccount = async () => {
       try {
-        // --- ¡ESTA ES LA SOLUCIÓN!! ---
-        // 1. Esperamos a que el módulo stellar-sdk se cargue
-        //    Esto devuelve el mismo objeto que vimos en la consola.
         const StellarSdk = await import('stellar-sdk');
-
-        console.log("StellarSdk loaded:", StellarSdk.Horizon);
-
-        // 2. Ahora que hemos esperado (await), 
-        //    StellarSdk.default SÍ existirá.
         const server = new StellarSdk.Horizon.Server('https://horizon-testnet.stellar.org');
-
-        // 3. El resto de tu código funciona igual
         const account = await server.accounts().accountId(publicKey).call();
-        
-        // Guardar los balances en el estado
-        setBalances(account.balances);
-
+        setBalances(account.balances || []);
       } catch (e) {
-        console.error('Error al buscar la cuenta:', e);
-        // Manejar error común: cuenta no encontrada (necesita fondeo)
+        console.error('Error fetching Stellar account:', e);
         if (e.response && e.response.status === 404) {
           setError('Esta cuenta aún no existe en la red (necesita ser fondeada con XLM).');
         } else {
@@ -63,12 +43,10 @@ export default function Dashboard() {
     };
 
     fetchAccount();
-
   }, [publicKey]);
 
-    const renderBalances = () => {
+  const renderBalances = () => {
     if (isLoading) {
-      // Usando clases de Tailwind para un spinner simple (opcional)
       return (
         <div className="flex justify-center items-center py-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
@@ -77,85 +55,118 @@ export default function Dashboard() {
       );
     }
 
-    if (error) {
-      return <p className="text-red-500 text-sm">{error}</p>;
-    }
+    if (error) return <p className="text-red-500 text-sm">{error}</p>;
+    if (!balances || balances.length === 0) return <p className="text-gray-500">No se encontraron balances.</p>;
 
-    if (balances.length === 0 && !isLoading) { // Asegúrate de no mostrar esto mientras carga
-      return <p className="text-gray-500">No se encontraron balances.</p>;
-    }
-
-    // Mostrar la lista de balances (XLM, y otros tokens)
     return (
-      <ul className="space-y-3">
+      <div className="balances-grid">
         {balances.map((balance, index) => (
-          <li key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm">
-            <span className="font-semibold text-lg text-gray-800">
-              {/* Muestra 'XLM' para el balance nativo, o el código del token */}
-              {balance.asset_type === 'native' ? 'XLM' : balance.asset_code}
-            </span>
-            <span className="font-mono text-lg text-gray-900">
-              {/* Formatea el balance a 7 decimales */}
-              {parseFloat(balance.balance).toFixed(7)}
-            </span>
-          </li>
+          <div key={index} className="balance-card">
+            <div className="balance-card-header">
+              <div className="card-icon-wrapper card-icon-wrapper-blue">
+                <Wallet size={28} className="card-icon" />
+              </div>
+              <h3 className="balance-card-asset">{balance.asset_type === 'native' ? 'XLM' : balance.asset_code}</h3>
+            </div>
+            <p className="balance-card-amount">{parseFloat(balance.balance).toFixed(4)}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     );
   };
 
-    return (
-      <div className="dashboard-container">
-        <header className="dashboard-header">
-          <div className="dashboard-header-content">
-            <div className="dashboard-logo">
-              <div className="logo-icon">
-                <Shield className="icon" />
-              </div>
-              <h1 className="logo-text">Dashboard</h1>
+  const shortKey = (key) => {
+    if (!key) return 'No conectado';
+    return `${key.substring(0, 6)}...${key.substring(key.length - 6)}`;
+  };
+
+  return (
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <div className="dashboard-header-content">
+          <div className="dashboard-logo">
+            <div className="logo-icon">
+              <Shield className="icon" />
             </div>
-            
-            <button onClick={handleLogout} className="logout-button">
-              <LogOut className="icon-small" />
-              Cerrar Sesión
+            <h1 className="logo-text">EduChain</h1>
+          </div>
+
+          <button onClick={handleLogout} className="logout-button">
+            <LogOut className="icon-small" />
+            Cerrar Sesión
+          </button>
+        </div>
+      </header>
+
+      <main className="dashboard-main">
+        <div className="dashboard-card">
+          <div className="wallet-info">
+            <div className="wallet-icon">
+              <Wallet className="icon" />
+            </div>
+            <div className="wallet-details">
+              <p className="wallet-label">Wallet Conectada</p>
+              <p className="wallet-key">{shortKey(publicKey)}</p>
+            </div>
+          </div>
+
+          <div className="welcome-section">
+            <h2 className="welcome-title">¡Bienvenido a EduChain! 🎓</h2>
+            <p className="welcome-text">Tu plataforma descentralizada de aprendizaje Web3</p>
+          </div>
+
+          <div className="actions-grid">
+            <button onClick={() => navigate('/courses')} className="action-card">
+              <div className="card-icon-wrapper card-icon-wrapper-blue">
+                <BookOpen size={28} className="card-icon" />
+              </div>
+              <h3 className="card-title">Explorar Cursos</h3>
+              <p className="card-text">Descubre cursos de Web3, desarrollo, DeFi y más. Aprende mientras ganas tokens.</p>
+            </button>
+
+            <button onClick={() => navigate('/profile')} className="action-card action-card-green">
+              <div className="card-icon-wrapper card-icon-wrapper-green">
+                <User size={28} className="card-icon" />
+              </div>
+              <h3 className="card-title">Mi Perfil</h3>
+              <p className="card-text">Visualiza tu progreso, certificados NFT, logros y estadísticas de aprendizaje.</p>
+            </button>
+
+            <button className="action-card action-card-yellow">
+              <div className="card-icon-wrapper card-icon-wrapper-yellow">
+                <Award size={28} className="card-icon" />
+              </div>
+              <h3 className="card-title">Mis Tokens</h3>
+              <p className="card-text">Gestiona tus tokens LEARN y EDU. Visualiza tu balance y transacciones.</p>
             </button>
           </div>
-        </header>
 
-        <main className="dashboard-main">
-          <div className="dashboard-card">
-            <div className="wallet-info">
-              <div className="wallet-icon">
-                <Wallet className="icon" />
-              </div>
-              <div className="wallet-details">
-                <p className="wallet-label">Conectado con</p>
-                {/* Asegúrate de acortar la clave pública para que se vea bien */}
-                <p className="wallet-key" title={publicKey}>
-                  {publicKey ? `${publicKey.substring(0, 6)}...${publicKey.substring(publicKey.length - 6)}` : 'No conectado'}
-                </p>
-              </div>
+          <div className="stats-grid">
+            <div>
+              <Sparkles size={24} className="stat-icon-blue" />
+              <div className="stat-value">500+</div>
+              <div className="stat-label">Cursos Disponibles</div>
             </div>
 
-            <div className="welcome-section">
-              <Stars className="welcome-icon" />
-              <h2 className="welcome-title">¡Bienvenido!</h2>
-              <p className="welcome-text">Tu dashboard está listo para ser personalizado</p>
+            <div>
+              <TrendingUp size={24} className="stat-icon-purple" />
+              <div className="stat-value">10K+</div>
+              <div className="stat-label">Estudiantes Activos</div>
             </div>
 
-            {/* --- ¡¡AQUÍ ESTÁ LA NUEVA SECCIÓN!! --- */}
-            <div className="balances-section">
-              <h3 className="balances-title">Tus Balances</h3>
-              
-              {/* Aquí es donde llamamos a la función renderBalances */}
-              {renderBalances()}
-
+            <div>
+              <Zap size={24} className="stat-icon-blue" />
+              <div className="stat-value">2M+</div>
+              <div className="stat-label">Tokens Distribuidos</div>
             </div>
-            {/* --- FIN DE LA NUEVA SECCIÓN --- */}
-
           </div>
-        </main>
-      </div>
-    );
-}
 
+          <div className="balances-section">
+            <h2 className="welcome-title balances-title">Mis Balances</h2>
+            {renderBalances()}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

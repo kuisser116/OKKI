@@ -1,0 +1,224 @@
+.courses-page-container {
+  min-height: 100vh;
+  background-color: #000000;
+  color: #F1F9F4;
+}
+
+.courses-page-header {
+  padding: 1.5rem 2rem;
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(241, 249, 244, 0.1);
+}
+
+.courses-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.courses-header-title {
+  color: #F1F9F4;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-button {
+  padding: 0.5rem 1rem;
+  background: #F70670;
+  color: #F1F9F4;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+  background: #ff4b9a;
+}
+
+.courses-page-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.filters-container {
+  background: rgba(241, 249, 244, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(241, 249, 244, 0.1);
+}
+
+.search-bar-wrapper {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.search-input-container {
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #F70670;
+  width: 20px;
+  height: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 1px solid rgba(241, 249, 244, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #F1F9F4;
+}
+
+.category-filters {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.category-button {
+  padding: 0.5rem 1.25rem;
+  background: rgba(241, 249, 244, 0.1);
+  color: #F1F9F4;
+  border: 1px solid rgba(241, 249, 244, 0.2);
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-button.active {
+  background: #F70670;
+  color: #F1F9F4;
+  border-color: #F70670;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.course-card {
+  background: rgba(241, 249, 244, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(241, 249, 244, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(247, 6, 112, 0.5);
+}
+
+.course-card-image {
+  height: 150px;
+  background: rgba(241, 249, 244, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.course-card-content {
+  padding: 1.5rem;
+}
+
+.course-card-title {
+  color: #F1F9F4;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.course-card-description {
+  color: rgba(241, 249, 244, 0.8);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.course-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.course-card-rating .star {
+  color: #F70670;
+  fill: #F70670;
+}
+
+.course-card-rating-value {
+  color: #F1F9F4;
+  font-weight: 600;
+}
+
+.course-card-students {
+  color: rgba(241, 249, 244, 0.6);
+  font-size: 0.875rem;
+}
+
+.course-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(241, 249, 244, 0.1);
+}
+
+.course-card-duration, .course-card-price {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.course-card-duration {
+  color: rgba(241, 249, 244, 0.8);
+}
+
+.course-card-price {
+  color: #F1F9F4;
+  font-weight: 700;
+}
+
+.course-card-price .coins-icon {
+  color: #F70670;
+}
+
+.no-courses-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #F1F9F4;
+}
+
+.no-courses-message p {
+  font-size: 1.25rem;
+}
