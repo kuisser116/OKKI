@@ -1,13 +1,10 @@
-
 /* ========================================
-   ESTILOS GENERALES
+   RESET Y ESTILOS GENERALES
 ======================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  width: 100%;
-  height: auto;
 }
 
 body {
@@ -16,157 +13,194 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+#root, .App {
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* ========================================
-   PÁGINA DE LOGIN
+   PÁGINA DE LOGIN MEJORADA
 ======================================== */
 .login-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #312e81, #7e22ce, #be185d);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 2rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Efectos de fondo animados */
+/* Efectos de fondo mejorados */
 .background-effects {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .bg-circle {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  animation: pulse 3s ease-in-out infinite;
+  filter: blur(100px);
+  opacity: 0.3;
 }
 
 .bg-circle-1 {
-  top: -160px;
-  right: -160px;
-  width: 320px;
-  height: 320px;
-  background: rgba(168, 85, 247, 0.3);
+  top: -10%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.3);
+  animation: float 20s ease-in-out infinite;
 }
 
 .bg-circle-2 {
-  bottom: -160px;
-  left: -160px;
-  width: 320px;
-  height: 320px;
-  background: rgba(236, 72, 153, 0.3);
-  animation-delay: 1s;
+  bottom: -10%;
+  left: -5%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.2);
+  animation: float 25s ease-in-out infinite reverse;
 }
 
 .bg-circle-3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 384px;
-  height: 384px;
-  background: rgba(99, 102, 241, 0.2);
-  animation-delay: 2s;
+  width: 600px;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.15);
+  animation: float 30s ease-in-out infinite;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
+  }
+}
+
+/* Card de Login mejorado */
+.login-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  z-index: 10;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 3rem;
+  position: relative;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icono principal mejorado */
+.login-icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.login-icon {
+  width: 96px;
+  height: 96px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.login-icon:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+}
+
+.login-icon .icon {
+  width: 48px;
+  height: 48px;
+  color: white;
 }
 
 @keyframes pulse {
   0%, 100% {
-    opacity: 1;
-    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.6);
   }
 }
 
-/* Card de Login */
-.login-card-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 448px;
-}
-
-.login-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 32px;
-  position: relative;
-}
-
-/* Icono principal del login */
-.login-icon-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.login-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(to bottom right, #a855f7, #ec4899);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
-  transition: transform 0.3s ease;
-}
-
-.login-icon:hover {
-  transform: scale(1.1);
-}
-
-.login-icon .icon {
-  width: 40px;
-  height: 40px;
-  color: white;
-}
-
-/* Header del login */
+/* Header mejorado */
 .login-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .login-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 8px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .login-subtitle {
-  font-size: 18px;
-  color: #d1d5db;
+  font-size: 1.125rem;
+  color: #6b7280;
+  font-weight: 500;
 }
 
-/* Información de seguridad */
+/* Información de seguridad mejorada */
 .security-info {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(102, 126, 234, 0.2);
 }
 
 .security-content {
   display: flex;
-  gap: 12px;
+  gap: 1rem;
   align-items: flex-start;
 }
 
 .security-icon {
-  width: 20px;
-  height: 20px;
-  color: #4ade80;
+  width: 24px;
+  height: 24px;
+  color: #667eea;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -176,69 +210,95 @@ body {
 }
 
 .security-title {
-  color: white;
-  font-weight: 600;
-  margin-bottom: 4px;
-  font-size: 14px;
+  color: #1f2937;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
 .security-description {
-  color: #d1d5db;
-  font-size: 14px;
+  color: #6b7280;
+  font-size: 0.875rem;
   line-height: 1.6;
 }
 
-/* Mensaje de error */
+/* Mensaje de error mejorado */
 .error-message {
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 24px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
 }
 
 .error-message p {
-  color: #fca5a5;
-  font-size: 14px;
+  color: #dc2626;
+  font-size: 0.875rem;
   text-align: center;
+  font-weight: 600;
 }
 
-/* Botón de conexión */
+/* Botón de conexión mejorado */
 .connect-button {
   width: 100%;
-  background: linear-gradient(to right, #9333ea, #db2777);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  font-weight: bold;
-  padding: 16px 24px;
-  border-radius: 12px;
+  font-weight: 700;
+  padding: 1.125rem 1.5rem;
+  border-radius: 16px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.connect-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.connect-button:hover::before {
+  left: 100%;
 }
 
 .connect-button:hover:not(:disabled) {
-  background: linear-gradient(to right, #7e22ce, #be185d);
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+}
+
+.connect-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .connect-button:disabled {
-  opacity: 0.5;
+  opacity: 0.7;
   cursor: not-allowed;
-}
-
-.connect-button.loading {
   transform: none;
 }
 
 .icon-small {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .chevron {
@@ -249,239 +309,314 @@ body {
   transform: translateX(4px);
 }
 
-/* Spinner de carga */
+/* Spinner mejorado */
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
-/* Footer del login */
+/* Footer mejorado */
 .login-footer {
-  margin-top: 24px;
+  margin-top: 2rem;
   text-align: center;
 }
 
 .footer-text {
-  color: #9ca3af;
-  font-size: 14px;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .footer-link {
-  color: #d8b4fe;
-  font-weight: 600;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  color: #667eea;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
 }
 
 .footer-link:hover {
-  color: #e9d5ff;
+  color: #764ba2;
+  border-bottom-color: #764ba2;
 }
 
-/* Sombra decorativa del card */
+/* Sombra decorativa mejorada */
 .login-card-shadow {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 75%;
-  height: 16px;
-  background: linear-gradient(to right, rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
-  filter: blur(20px);
-  border-radius: 50%;
+  display: none;
 }
 
 /* ========================================
-   PÁGINA DE DASHBOARD
+   PÁGINA DE DASHBOARD MEJORADA
 ======================================== */
 .dashboard-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #0f172a, #581c87, #0f172a);
+  width: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
 }
 
-/* Header del Dashboard */
+/* Header del Dashboard mejorado */
 .dashboard-header {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .dashboard-header-content {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 16px 24px;
+  width: 100%;
+  max-width: 100%;
+  padding: 1.25rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
 }
 
 .dashboard-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(to bottom right, #a855f7, #ec4899);
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.05);
 }
 
 .logo-icon .icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: white;
 }
 
 .logo-text {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .logout-button {
   display: flex;
-  width: clamp(100px, 30%, 250px);
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .logout-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-/* Contenido principal del dashboard */
+/* Contenido principal mejorado */
 .dashboard-main {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 48px 24px;
+  width: 100%;
+  max-width: 100%;
+  padding: 3rem 2rem;
+  margin: 0;
 }
 
 .dashboard-card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
-  border-radius: 16px;
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 32px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 100%;
 }
 
-/* Información de wallet */
+/* Información de wallet mejorada */
 .wallet-info {
   display: flex;
-  gap: 12px;
+  gap: 1rem;
   align-items: center;
-  margin-bottom: 24px;
+  padding: 1.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 16px;
+  margin-bottom: 2rem;
 }
 
 .wallet-icon {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(to bottom right, #10b981, #059669);
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+  flex-shrink: 0;
 }
 
 .wallet-icon .icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   color: white;
 }
 
 .wallet-details {
   flex: 1;
+  min-width: 0;
 }
 
 .wallet-label {
-  font-size: 14px;
-  color: #9ca3af;
-  margin-bottom: 4px;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.25rem;
+  font-weight: 600;
 }
 
 .wallet-key {
   color: white;
   font-family: 'Courier New', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   word-break: break-all;
+  font-weight: 600;
 }
 
-/* Sección de bienvenida */
+/* Sección de bienvenida mejorada */
 .welcome-section {
   text-align: center;
-  padding: 80px 0;
-}
-
-.welcome-icon {
-  width: 64px;
-  height: 64px;
-  color: #c084fc;
-  margin: 0 auto 16px;
-  animation: pulse 2s ease-in-out infinite;
+  padding: 4rem 0;
 }
 
 .welcome-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 8px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .welcome-text {
-  font-size: 18px;
-  color: #9ca3af;
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
 }
 
 /* ========================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN MEJORADO
 ======================================== */
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
+  .dashboard-main {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 2rem;
+  }
+  
   .login-title {
-    font-size: 28px;
+    font-size: 2rem;
   }
   
   .login-subtitle {
-    font-size: 16px;
+    font-size: 1rem;
   }
   
-  .login-card {
-    padding: 24px;
+  .login-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .login-icon .icon {
+    width: 40px;
+    height: 40px;
   }
   
   .dashboard-header-content {
-    padding: 12px 16px;
+    padding: 1rem;
+  }
+  
+  .logo-text {
+    font-size: 1.25rem;
   }
   
   .dashboard-main {
-    padding: 24px 16px;
+    padding: 2rem 1rem;
+  }
+  
+  .dashboard-card {
+    padding: 1.5rem;
+  }
+  
+  .welcome-section {
+    padding: 3rem 0;
   }
   
   .welcome-title {
-    font-size: 28px;
+    font-size: 2rem;
   }
   
   .welcome-text {
-    font-size: 16px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem;
+  }
+  
+  .login-title {
+    font-size: 1.75rem;
+  }
+  
+  .connect-button {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+  
+  .wallet-info {
+    flex-direction: column;
+    text-align: center;
   }
 }

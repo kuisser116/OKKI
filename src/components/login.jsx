@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { Wallet, LogOut, Shield, Stars, ChevronRight } from 'lucide-react';
-import albedo from '@albedo-link/intent'; // <-- 1. Esta es tu "constante"
+import { Wallet, LogOut, Shield, ChevronRight, AlertCircle, Sparkles } from 'lucide-react';
+import albedo from '@albedo-link/intent';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const navigator = useNavigate();
-  console.log("token", localStorage.getItem('token'));
+  const navigate = useNavigate();
   
   const connectWallet = async () => {
     setIsLoading(true);
@@ -18,20 +15,16 @@ export default function App() {
     
     try {
       const res = await albedo.publicKey({ network: 'testnet' });
-      setIsAuthenticated(true);
       localStorage.setItem('token', res.pubkey);
-        navigator('/dashboard');
-      
+      navigate('/dashboard');
     } catch (e) {
-      setError('Error al conectar con Albedo. Por favor, intenta de nuevo.');
+      setError('No se pudo conectar con Albedo. Verifica que la extensión esté instalada.');
       console.error("Error al conectar con Albedo:", e);
     } finally {
       setIsLoading(false);
     }
   };
 
-
-  // Página de Login
   return (
     <div className="login-container">
       {/* Efectos de fondo animados */}
@@ -53,18 +46,18 @@ export default function App() {
 
           {/* Título */}
           <div className="login-header">
-            <h1 className="login-title">Bienvenido</h1>
-            <p className="login-subtitle">Autenticación segura con Albedo</p>
+            <h1 className="login-title">EduChain</h1>
+            <p className="login-subtitle">Aprende, Gana y Crece en Web3</p>
           </div>
 
           {/* Información de seguridad */}
           <div className="security-info">
             <div className="security-content">
-              <Shield className="security-icon" />
+              <Sparkles className="security-icon" />
               <div className="security-text">
-                <h3 className="security-title">Verificación de Identidad</h3>
+                <h3 className="security-title">Autenticación Descentralizada</h3>
                 <p className="security-description">
-                  Utiliza tu wallet de Stellar para autenticarte de forma segura y descentralizada en la red Testnet.
+                  Conecta tu wallet de Stellar de forma segura. No almacenamos tus claves privadas.
                 </p>
               </div>
             </div>
@@ -73,7 +66,10 @@ export default function App() {
           {/* Mensaje de error */}
           {error && (
             <div className="error-message">
-              <p>{error}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>
+                <AlertCircle size={16} />
+                <p>{error}</p>
+              </div>
             </div>
           )}
 
@@ -112,9 +108,6 @@ export default function App() {
             </p>
           </div>
         </div>
-
-        {/* Decoración inferior */}
-        <div className="login-card-shadow"></div>
       </div>
     </div>
   );
