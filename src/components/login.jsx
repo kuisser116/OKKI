@@ -10,7 +10,6 @@ export default function App() {
   const [error, setError] = useState(null);
 
   const navigator = useNavigate();
-  console.log("token", localStorage.getItem('token'));
   
   const connectWallet = async () => {
     setIsLoading(true);
